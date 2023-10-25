@@ -5,6 +5,9 @@
 ## Project Description
 This is a sample Spring Boot(3.1.3) project built with Maven, supporting Java 17, and designed to be seamlessly run on any integrated development environment (IDE). This project includes example codes of performing crypto operations from Fortanix Data Security Manager(DSM).
 
+##### Key Information Retrieval
+This project also demonstrates an approach to fetch key information when you have knowledge of only key_id and/or key_name and require additional key information for creating key and cipher instances. This approach makes a call to DSM's GET key-info API (/crypto/v1/keys/{key-id}) and responds only with key metadata (NOT key material). This key metadata can be used to create a key and cipher instance and proceed with encryption. It's important to note that key metadata fetched through this approach is only intended for application logic using dsma-jce and is not cached within dsma. When the encrypt call is invoked, for dsma mode, the control flow will move to dsma library, which will make an export call to fetch key material and cache it for subsequent calls as well before performing encryption locally.
+
 ## Getting Started
 
 To get started with this project, follow these steps:
