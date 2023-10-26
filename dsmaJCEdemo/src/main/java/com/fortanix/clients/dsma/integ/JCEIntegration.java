@@ -18,9 +18,6 @@ import java.security.*;
 import java.security.cert.CertificateException;
 import java.util.Base64;
 
-/*
- * written by mridul
-*/
 public class JCEIntegration {
 
     // replace with dsm url for env you are pointing to.

@@ -10,9 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.security.Key;
 import java.security.Security;
 
-/*
- * written by mridul
-*/
 @SpringBootApplication
 public class DsmaJCEdemoApplication {
 
