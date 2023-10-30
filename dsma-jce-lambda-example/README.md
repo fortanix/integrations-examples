@@ -46,7 +46,6 @@ Refer this [doc](https://docs.aws.amazon.com/lambda/latest/dg/configuration-func
 Now, we have to set environment variables for the lambda function:
 - Set `FORTANIX_API_ENDPOINT` to any dsm endpoint
 - Set `FORTANIX_API_KEY` to appropriate Credential
-- Set `FORTANIX_DSM_ACCELERATOR` to `true`
 - Set `KEY_ID` to an existing key in the account. This is needed for the example as we will be using the same to perform cryptography
 
 ### Testing
