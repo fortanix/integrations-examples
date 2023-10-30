@@ -29,7 +29,6 @@ public class SampleSdkmsJCETest implements RequestHandler<List<Integer>, Void>{
     public SampleSdkmsJCETest() {
         System.setProperty("FORTANIX_API_ENDPOINT",  System.getenv("FORTANIX_API_ENDPOINT"));
         System.setProperty("FORTANIX_API_KEY", System.getenv("FORTANIX_API_KEY"));
-		System.setProperty("dsm.accelerator", "true");
         provider = SdkmsJCE.getInstance();
         Security.addProvider(provider);
     }
