@@ -57,21 +57,21 @@ public class DsmaJCEdemoApplication {
 		doEncryptDecrypt(credit_card_num, fpekey3, CipherTransformations.AES_256_FPE_NOPADDING.mode());
 
 		// DES(56bit) encrypt/decrypt use-cases
-        String des_key_id = "<DES Key UUID>";
-        String des_key_name = "<DES Key Name>";
+		String des_key_id = "<DES Key UUID>";
+		String des_key_name = "<DES Key Name>";
 
-        Key deskey1 = integration.basicKeyObject(des_key_id, des_key_name, 56);
-        doEncryptDecrypt(plainText1, deskey1, CipherTransformations.DES_56_CBC_NOPADDING.mode());
+		Key deskey1 = integration.basicKeyObject(des_key_id, des_key_name, 56);
+		doEncryptDecrypt(plainText1, deskey1, CipherTransformations.DES_56_CBC_NOPADDING.mode());
 
-        Key deskey2 = integration.fetchKeyMetadataByName(des_key_name);
-        doEncryptDecrypt(plainText2, deskey2, CipherTransformations.DES_56_CBC_PKCS5PADDING.mode());
+		Key deskey2 = integration.fetchKeyMetadataByName(des_key_name);
+		doEncryptDecrypt(plainText2, deskey2, CipherTransformations.DES_56_CBC_PKCS5PADDING.mode());
 
-        Key deskey3 = integration.fetchKeyMetadataFromKeyStore(des_key_name);
-        doEncryptDecrypt(plainText3, deskey3, CipherTransformations.DES_56_ECB_NOPADDING.mode());
+		Key deskey3 = integration.fetchKeyMetadataFromKeyStore(des_key_name);
+		doEncryptDecrypt(plainText3, deskey3, CipherTransformations.DES_56_ECB_NOPADDING.mode());
 
 		// DES3 encrypt/decrypt use-cases
-        String des3_key_id = "<DES3 Key UUID>";
-        String des3_key_name = "<DES3 Key Name>";
+		String des3_key_id = "<DES3 Key UUID>";
+		String des3_key_name = "<DES3 Key Name>";
 
 		Key des3key1 = integration.basicKeyObject(des3_key_id, des3_key_name, 168);
 		doEncryptDecrypt(plainText1, des3key1, CipherTransformations.DES3_168_CBC_NOPADDING.mode());
