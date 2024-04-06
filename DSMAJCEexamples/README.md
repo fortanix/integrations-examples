@@ -74,4 +74,32 @@ The file path can be passed using the following command-line argument:
 
 7. Replace all the `<Key UUID>` & `<Key Name>` with your security object's Key UUID & Key Name in DSMAJCE.java
 
-6. Run DsmaJCE class as main java application.
+8. **LOGGING:**
+To Activate the debugging mode for logging set `FORTANIX_LOG_DEBUG` to true & use `FORTANIX_LOG_FOLDER` to specify the folder location for log files.
+To capture detailed logs, in addition to Java application logs, Fortanix DSM-Accelerator JCE offers a `RUST_LOG` parameter. The `RUST_LOG` parameter allows you to define the desired verbosity level for enhanced logging.
+To enable enhanced logging, set the environment variable to any one of the given values:
+```
+RUST_LOG=debug/warn/info/error/trace
+```
+If enhanced logging is enabled by setting the `RUST_LOG` environment variable, the log directory should mandatorily exist on the system.
+The path where the detailed logs will be generated should be configured as follows:
+For Linux operating system:
+```
+LOG_FILE=/home/user/files/logs/dsma.log
+```
+For Windows operating system:
+```
+LOG_FILE=C:\Users\Admin\DSMA\logs\dsma.log
+```
+However, if the log file location is not configured as environment variable, then the temporary (/temp) directory for the applicable operating system will be considered as the default log location.
+For example:
+For Linux operating system:
+```
+LOG_FILE=/tmp/jni_dsma.log
+```
+For Windows operating system:
+```
+LOG_FILE=C:\Users\Administrator\AppData\Local\Temp\2\jni_dsma.log
+```
+
+9. Run DsmaJCE class as main java application.
