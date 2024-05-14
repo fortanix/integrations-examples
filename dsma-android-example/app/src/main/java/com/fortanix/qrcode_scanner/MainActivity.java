@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     private static final int CAMERA_PERMISSION_CODE = 100;
     private static int isAppLaunch = 1;
 
+    /* Fortanix DSM/DSM-A specific configuration variables */
     private static String FORTANIX_API_ENDPOINT = "<Endpoint URL>";
     private static String FORTANIX_API_KEY = "<API Key>";
     private static String FORTANIX_KEY_UUID = "<KEY UUID>";
