@@ -34,7 +34,7 @@ To get started with this project, follow these steps:
 ```bash
 git clone https://github.com/fortanix/integrations-examples.git
 ```
-2. Import the project into your Android Studio IDE. Go to "File" -> "Open" and select the project's root directory(dsma-android-example).
+2. Open the project into your Android Studio IDE. Go to "File" -> "Open" and select the project's root directory(dsma-android-example).
 
 ## To run
 
@@ -45,6 +45,7 @@ git clone https://github.com/fortanix/integrations-examples.git
    o Add native dynamic library for a respective architecture to the corresponding directory (arm64-v8a and/or armeabi-v7a) as shown in figure below
 
 ![ProjectStructure](images/ProjectStructure.png)
+
    o Include DSMA jar dependency in build.gradle or build.gradle.kts file as follows 
 
 ```
@@ -64,7 +65,7 @@ Replace `<Endpoint URL>` & `<API Key>`in MainActivity.java with the relevant dsm
 
 6. These variables also can be dynamically changed via application under settings menu as shown in figure below. But make sure they are defined with defaults to start with.
 
-![Settings](images/Settings.png)
+![Settings](images/Settings.jpg)
 
 7. Sync gradle and build project
 
@@ -74,10 +75,10 @@ Replace `<Endpoint URL>` & `<API Key>`in MainActivity.java with the relevant dsm
 
 10. Run application and you will see scanner started as follows
 
-![Settings](images/app-img-1.png)
+![](images/app-img-1.jpg)
 
 11. Scan tokenized QR code
-![Settings](images/app-img-2.png)
+![Settings](images/app-img-2.jpg)
 
 12. Normal scanner would have read tokenized QR code as follows
-![Settings](images/app-img-3.png)
+![Settings](images/app-img-3.jpg)
