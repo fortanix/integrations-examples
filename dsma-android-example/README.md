@@ -61,9 +61,11 @@ Replace `<Endpoint URL>` & `<API Key>`in MainActivity.java with the relevant dsm
 5. For detokenization and caching keys:-
       Replace `"<KEY UUID>"` & `<Duration in Seconds>` in MainActivity.java with the relevant dsm key uuid and cache duration in seconds as shown in the figure below.
 
+
 ![Configuration](images/Configuration.png)
 
 6. These variables also can be dynamically changed via application under settings menu as shown in figure below. But make sure they are defined with defaults to start with.
+
 
 ![Settings](images/Settings.jpg)
 
@@ -75,10 +77,15 @@ Replace `<Endpoint URL>` & `<API Key>`in MainActivity.java with the relevant dsm
 
 10. Run application and you will see scanner started as follows
 
+
 ![](images/app-img-1.jpg)
 
 11. Scan tokenized QR code
+
+
 ![Settings](images/app-img-2.jpg)
 
 12. Normal scanner would have read tokenized QR code as follows
+
+
 ![Settings](images/app-img-3.jpg)
