@@ -61,7 +61,6 @@ Replace `<Endpoint URL>` & `<API Key>`in MainActivity.java with the relevant dsm
 5. For detokenization and caching keys:-
       Replace `"<KEY UUID>"` & `<Duration in Seconds>` in MainActivity.java with the relevant dsm key uuid and cache duration in seconds as shown in the figure below.
 
-![ProjectStructure](images/ProjectStructure.png)
 ![Configuration](images/Configuration.png)
 
 6. These variables also can be dynamically changed via application under settings menu as shown in figure below. But make sure they are defined with defaults to start with.
