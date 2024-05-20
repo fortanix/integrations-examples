@@ -67,7 +67,7 @@ Replace `<Endpoint URL>` & `<API Key>`in MainActivity.java with the relevant dsm
 6. These variables also can be dynamically changed via application under settings menu as shown in figure below. But make sure they are defined with defaults to start with.
 
 
-![Settings](images/Settings.jpg)
+![Settings](images/Settings.png)
 
 7. Sync gradle and build project
 
