@@ -76,15 +76,14 @@ Replace `<Endpoint URL>` & `<API Key>`in MainActivity.java with the relevant dsm
 
 10. Run application and you will see scanner started as follows
 
+![App-img-1](images/app-img-1.png)
 
-![](images/app-img-1.jpg)
 
 11. Scan tokenized QR code
 
+![App-img-2](images/app-img-2.png)
 
-![Settings](images/app-img-2.jpg)
 
 12. Normal scanner would have read tokenized QR code as follows
 
-
-![Settings](images/app-img-3.jpg)
+![App-img-3](images/app-img-3.png)
