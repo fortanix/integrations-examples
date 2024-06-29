@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">DSM Powered Secured Scanner</string>
+    <string name="action_settings">Settings</string>
+    <string name="sdkms_header">DSM Resources</string>
+    <string name="fortanix_endpoint">DSM Endpoint</string>
+    <string name="apikey">DSM API Key</string>
+    <string name="key_uuid">Key UUID</string>
+    <string name="cache_duration">Cache Duration</string>
+    <string name="dialog_title">Scan Result</string>
+</resources>
