@@ -39,17 +39,17 @@
 -- {
 --   "name": "master_key",
 --   "creator": {
---     "plugin": "4ad4da1d-29ff-4a50-a713-ae4f793d57a2"
+--     "plugin": "4ad4da1d-29ff-4xx0-axx3-axxxxxxxxxx2"
 --   },
 --   "key_ops": [
 --     "EXPORT",
 --     "APPMANAGEABLE"
 --   ],
 --   "state": "Active",
---   "group_id": "7184e2bc-5061-44a5-bb1e-ad437762cc48",
+--   "group_id": "7184e2bc-5061-4xx5-bxxe-axxxxxxxxxx8",
 --   "obj_type": "SECRET",
---   "acct_id": "ad43e085-dcc3-44c2-b088-d2f4d0409383",
---   "kid": "8eccd0c9-e4d8-48b1-b30b-dc32e4f70d28",
+--   "acct_id": "ad43e085-dcc3-4xx2-bxx8-dxxxxxxxxxx3",
+--   "kid": "8eccd0c9-e4d8-4xx1-bxxb-dxxxxxxxxxx8",
 --   ...
 -- }
 -- ```
@@ -75,7 +75,7 @@
 -- Input JSON with kid
 -- ```
 -- {
---    "kid": "8eccd0c9-e4d8-48b1-b30b-dc32e4f70d28",
+--    "kid": "8eccd0c9-e4d8-4xx1-bxxb-dxxxxxxxxxx8",
 --    "method": "rotate"
 -- }
 -- ```
@@ -86,19 +86,19 @@
 -- {
 --   "name": "master_key",
 --   "creator": {
---     "plugin": "4ad4da1d-29ff-4a50-a713-ae4f793d57a2"
+--     "plugin": "4ad4da1d-29ff-4xx0-axx3-axxxxxxxxxx2"
 --   },
 --   "key_ops": [
 --     "EXPORT",
 --     "APPMANAGEABLE"
 --   ],
 --   "state": "Active",
---   "group_id": "7184e2bc-5061-44a5-bb1e-ad437762cc48",
+--   "group_id": "7184e2bc-5061-4xx5-bxxe-axxxxxxxxxx8",
 --   "obj_type": "SECRET",
---   "acct_id": "ad43e085-dcc3-44c2-b088-d2f4d0409383",
---   "kid": "dd7c9f04-08f4-4a5c-be52-836d837ef78e",
+--   "acct_id": "ad43e085-dcc3-4xx2-bxx8-dxxxxxxxxxx3",
+--   "kid": "dd7c9f04-08f4-4xxc-bxx2-8xxxxxxxxxxe",
 --   "links": {
---     "replaced": "8eccd0c9-e4d8-48b1-b30b-dc32e4f70d28"
+--     "replaced": "8eccd0c9-e4d8-4xx1-bxxb-dxxxxxxxxxx8"
 --   },
 --   ...
 -- }
