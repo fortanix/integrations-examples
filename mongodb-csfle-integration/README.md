@@ -13,7 +13,7 @@ This project demonstrates how to use **Client-Side Field Level Encryption (CSFLE
 5. **Fortanix DSM Configuration**
    1. DSM Group
    2. DSM cert based App
-   3. DSM Plugin to create or rotate a 96 byte secret (Find the code for the lua plugin at `plugin/createCMK.lua`)
+   3. DSM Plugin to create or rotate a 96 byte secret (Find the code for the lua plugin at `plugins/plugin.lua`)
 ---
 
 ## Configuration
