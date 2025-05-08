@@ -63,9 +63,9 @@ public class FortanixMongodbCSFLE {
         ClientEncryption clientEncryption = ClientEncryptions.create(clientEncryptionSettings);
         Document masterKeyProperties = new Document();
         // If an existing security object in DSM needs to be used as CMK then it must be of size 96 bytes (secret or HMAC) and it must have export permission.
+        // keyId is the UUID of the security object in DSM.
         // Then, define your masterKeyProperties like this:
-        // Document masterKeyProperties = new Document().append("<keyId>", keyId);
-        // keyId is the UUID of the security object in DSM
+        // Document masterKeyProperties = new Document().append("keyId", keyId);
 
         BsonBinary dataKeyId = clientEncryption.createDataKey(KMS_PROVIDER, new DataKeyOptions().masterKey(masterKeyProperties.toBsonDocument()));
         String base64DataKeyId = Base64.getEncoder().encodeToString(dataKeyId.getData());
