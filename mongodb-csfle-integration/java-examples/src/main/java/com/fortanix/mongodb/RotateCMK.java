@@ -22,6 +22,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.ByteBuffer;
+import java.security.SecureRandom;
 import java.util.*;
 
 public class RotateCMK {
@@ -40,10 +41,7 @@ public class RotateCMK {
     public static final String KMS_PROVIDER = "kmip";
     public static final String KMS_ENDPOINT = "<DSM ENDPOINT URL>"; // Ex: "https://apac.smartkey.io"
 
-//    Copy the UUID of the plugin that was created in DSM to create/rotate a 96 byte secret
-    public static final String PLUGIN_UUID = "<PLUGIN ID IN DSM>";// Ex: "0XXXXXXX-YYYY-HHHH-GGGG-123456789123";
-    public static final String PLUGIN_API = "/sys/v1/plugins/";
-//  How to identify the hostname for cert based authentication to invoke the DSM plugin? (FORTANIX_API_ENDPOINT)
+//  How to identify the hostname for cert based authentication to DSM
 //  1. Login as an administrator to DSM
 //  2. Go to Settings
 //  3. Go to Interfaces
@@ -91,23 +89,49 @@ public class RotateCMK {
     }
 
     private static String sendRotateRequest(String oldCMKId) throws Exception {
+        SecureRandom secureRandom = new SecureRandom();
+        // Generate 96 random bytes
+        byte[] secret = new byte[96];
+        secureRandom.nextBytes(secret);
+        String base64Secret = Base64.getEncoder().encodeToString(secret);
+        // Build HTTP client to communicate with DSM API
         HttpClient client = HttpClient.newBuilder().build();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(FORTANIX_API_ENDPOINT + PLUGIN_API + PLUGIN_UUID))
+
+        // GET Sobject Request
+        HttpRequest getOldCMKData = HttpRequest.newBuilder()
+                .uri(URI.create(FORTANIX_API_ENDPOINT + "/crypto/v1/keys/" + oldCMKId))
                 .header("Content-Type", "application/json")
                 .header("Authorization", AUTH_HEADER)
-                .POST(HttpRequest.BodyPublishers.ofString("{\"kid\":\"" + oldCMKId + "\",\"method\":\"rotate\"}"))
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() == 200) {
-            JSONObject responseObject = new JSONObject(response.body());
-            System.out.println("CMK successfully rotated. New Master Key UUID: " + responseObject.getString("kid"));
-            return responseObject.getString("kid");
+                .GET().build();
+        HttpResponse<String> oldCMKDataResponse = client.send(getOldCMKData, HttpResponse.BodyHandlers.ofString());
+        String oldCmkName = null;
+        if (oldCMKDataResponse.statusCode() == 200) {
+            JSONObject oldCmkData = new JSONObject(oldCMKDataResponse.body());
+            oldCmkName = oldCmkData.getString("name");
         } else {
-            System.out.println("Request failed with status code: " + response.statusCode() + "\nError: " + response.body());
+            System.out.println("Request failed with status code: " + oldCMKDataResponse.statusCode() + "\nError: " + oldCMKDataResponse.body());
             return null;
         }
-
+        // POST Rotate Sobject Request
+        HttpRequest postRekeyRequest = HttpRequest.newBuilder()
+                .uri(URI.create(FORTANIX_API_ENDPOINT + "/crypto/v1/keys/rekey"))
+                .header("Content-Type", "application/json")
+                .header("Authorization", AUTH_HEADER)
+                .POST(HttpRequest.BodyPublishers.ofString("{\n" +
+                        "    \"kid\": \"" + oldCMKId + "\",\n" +
+                        "    \"value\": \"" + base64Secret + "\",\n" +
+                        "    \"name\": \"" + oldCmkName + "\"\n" +
+                        "}"))
+                .build();
+        HttpResponse<String> rekeyResponse = client.send(postRekeyRequest, HttpResponse.BodyHandlers.ofString());
+        if (rekeyResponse.statusCode() == 201) {
+            JSONObject newCMKData = new JSONObject(rekeyResponse.body());
+            System.out.println("CMK successfully rotated. New Master Key UUID: " + newCMKData.getString("kid"));
+            return newCMKData.getString("kid");
+        } else {
+            System.out.println("Request failed with status code: " + rekeyResponse.statusCode() + "\nError: " + rekeyResponse.body());
+            return null;
+        }
     }
 
     private static void rewrapDataKeys(String newCMKId) {
