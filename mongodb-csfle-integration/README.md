@@ -39,7 +39,8 @@ To configure the `trustStore` and `keyStore` in the `FortanixMongodbCSFLE.java` 
 Configure Fortanix DSM as the KMIP provider.
 
 ### Generate a Data Encryption Key (DEK) and Customer Master Key(CMK):
-Generate a DEK using ClientEncryptionSettings. This will also generate a CMK and imports it to Fortanix.
+Generate a DEK using ClientEncryptionSettings.
+This will also generate a CMK and import into Fortanix DSM for persistent storage. Fortanix DSM can be used later for managing and retrieving this key.
 Save the DEK ID as a Base64-encoded string for schema validation.
 
 ### Define JSON Schema:
@@ -68,7 +69,7 @@ Close the MongoDB client to release resources.
 Configure Fortanix DSM as the KMIP provider.
 
 ### Rotate the CMK
-Generate a random 96-byte secret and invoke the rekey API to rotate the CMK.
+Generate a random 96-byte secret and invoke the rekey API to rotate the CMK stored in Fortanix DSM.
 
 ### Rewrap DEK
 Use the new CMK to rewrap the DEKs.
