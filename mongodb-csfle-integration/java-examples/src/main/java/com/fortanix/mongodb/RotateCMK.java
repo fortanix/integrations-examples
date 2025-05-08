@@ -118,7 +118,6 @@ public class RotateCMK {
                 .header("Content-Type", "application/json")
                 .header("Authorization", AUTH_HEADER)
                 .POST(HttpRequest.BodyPublishers.ofString("{\n" +
-                        "    \"kid\": \"" + oldCMKId + "\",\n" +
                         "    \"value\": \"" + base64Secret + "\",\n" +
                         "    \"name\": \"" + oldCmkName + "\"\n" +
                         "}"))
