@@ -61,8 +61,8 @@ public class RotateCMK {
         System. setProperty("javax.net.ssl.keyStorePassword", KEYSTORE_PASSWORD);
     }
 
-    private static String fetchCMKFromDEKId() {
-        Binary uuidBinary = convertUUIDToBinary(getUUID(RotateCMK.DEK_BASE64_ID));
+    private static String fetchCMKFromDEKId(String dekBase64Id) {
+        Binary uuidBinary = convertUUIDToBinary(getUUID(dekBase64Id));
         MongoClient mongoClient = MongoClients.create(MONGO_CONNECTION_STRING);
         MongoDatabase database = mongoClient.getDatabase(KEY_VAULT_DB_NAME);
         MongoCollection<Document> collection = database.getCollection(KEY_VAULT_COLLECTION_NAME);
@@ -161,10 +161,17 @@ public class RotateCMK {
 
 
     public static void main(String[] args) throws Exception {
+        String dekBase64Id = System.getProperty("kid");
+        if (dekBase64Id == null || dekBase64Id.isEmpty()) {
+            System.out.println("Usage: java -Dkid=<base64_key_id> -cp target/classes com.fortanix.mongodb.RotateCMK");
+            System.out.println("Example: java -Dkid=FlH02YLXXXXXXXXXXXXX== -cp target/classes com.fortanix.mongodb.RotateCMK");
+            System.exit(1);
+        }
+        System.out.println("Using provided DEK ID: " + dekBase64Id);
         // configure SSL properties for keyStore and trustStore
         configureSSLProperties();
         // fetch the existing CMK ID
-        String oldCMKId = fetchCMKFromDEKId();
+        String oldCMKId = fetchCMKFromDEKId(dekBase64Id);
         // rotate the existing CMK in DSM
         String newCMKId = sendRotateRequest(oldCMKId);
         // rewrap the DEK with the new CMK

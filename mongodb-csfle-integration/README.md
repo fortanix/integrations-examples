@@ -67,6 +67,7 @@ Close the MongoDB client to release resources.
 
 ### Setup KMS Provider:
 Configure Fortanix DSM as the KMIP provider.
+Pass the Base64 Key Id as command line argument.(eg: java -Dkid=FlH02YLXXXXXXXXXXXXX== -cp target/classes com.fortanix.mongodb.RotateCMK)
 
 ### Rotate the CMK
 Generate a random 96-byte secret and invoke the rekey API to rotate the CMK stored in Fortanix DSM.
