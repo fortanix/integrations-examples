@@ -26,7 +26,6 @@ import java.security.SecureRandom;
 import java.util.*;
 
 public class RotateCMK {
-    public static final String DEK_BASE64_ID = "hGVMX7+wS92/VArfdEhEYw==";
     public static final String TRUSTSTORE_TYPE = "jks";
     public static final String TRUSTSTORE_PATH = ""; // Ex: "/path/to/trustStore.jks"
     public static final String TRUSTSTORE_PASSWORD = ""; // Ex: "trustStorePassword"
