@@ -37,21 +37,6 @@ public class FortanixMongodbCSFLE {
     public static final String ENCRYPTION_ALGORITHM = "AEAD_AES_256_CBC_HMAC_SHA_512-Deterministic";
 //    DSM endpoint for KMIP to connect to DSM
     public static final String KMS_ENDPOINT = "<DSM ENDPOINT URL>"; // Ex: "https://apac.smartkey.io"
-
-//    Copy the UUID of the plugin that was created in DSM to create/rotate a 96 byte secret
-    public static final String PLUGIN_UUID = "<PLUGIN ID IN DSM>";// Ex: "0XXXXXXX-YYYY-HHHH-GGGG-123456789123";
-    public static final String PLUGIN_API = "/sys/v1/plugins/";
-    public static final String CMK_NAME = "96_BYTE_SECRET";
-//  How to identify the hostname for cert based authentication to invoke the DSM plugin? (FORTANIX_API_ENDPOINT)
-//  1. Login as an administrator to DSM
-//  2. Go to Settings
-//  3. Go to Interfaces
-//  4. Identify the hostname where Request client certificate has been checked.
-    public static final String FORTANIX_API_ENDPOINT = "<DSM ENDPOINT URL FOR CERT-BASED AUTHENTICATION>"; // Ex: "https://api.apac/smartkey.io"
-//    base64 encoding of {"<certificate_app_ID>" + ":"}
-//    EG: Base64(0XXXXXXX-ABCD-HHHH-GGGG-123456789123:)
-    public static final String AUTH_HEADER = "<Basic Base64{App_ID:}>" ; // Ex: "Basic MFhYWFhYWFgtWVlZWS1ISEhILUdHR0ctMTIzNDU2Nzg5MTIzOgo=";
-
 //    Constants for Sample document
     public static final String EMPLOYEE_NAME = "Alice";
     public static final String DB_NAME = "testFortanix";
@@ -67,26 +52,6 @@ public class FortanixMongodbCSFLE {
     }
 
     private static String createCMKandDEK(Map<String, Map<String, Object>> kmsProviders) throws IOException, InterruptedException {
-        /// CMK CREATION
-        HttpClient client = HttpClient.newBuilder().build();
-        // CERT BASED AUTHENTICATION
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(FORTANIX_API_ENDPOINT + PLUGIN_API + PLUGIN_UUID))
-                .header("Content-Type", "application/json")
-                .header("Authorization", AUTH_HEADER)
-                .POST(HttpRequest.BodyPublishers.ofString("{\"name\":\"" + CMK_NAME + "\",\"method\":\"create\"}"))
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        String keyId = null;
-        if (response.statusCode() == 200) {
-            JSONObject responseObject = new JSONObject(response.body());
-            keyId = responseObject.getString("kid");
-            System.out.println("Successfully invoked plugin. CMK ID: " + keyId);
-        } else {
-            System.out.println("Request failed with status code: " + response.statusCode());
-            System.exit(0);
-        }
-
         /// DEK CREATION
         ClientEncryptionSettings clientEncryptionSettings = ClientEncryptionSettings.builder()
                 .keyVaultMongoClientSettings(MongoClientSettings.builder()
@@ -96,7 +61,11 @@ public class FortanixMongodbCSFLE {
                 .kmsProviders(kmsProviders)
                 .build();
         ClientEncryption clientEncryption = ClientEncryptions.create(clientEncryptionSettings);
-        Document masterKeyProperties = new Document().append("keyId", keyId);
+        Document masterKeyProperties = new Document();
+        // If an existing security object in DSM needs to be used as CMK then it must be of size 96 bytes (secret or HMAC) and it must have export permission.
+        // keyId is the UUID of the security object in DSM.
+        // Then, define your masterKeyProperties like this:
+        // Document masterKeyProperties = new Document().append("keyId", keyId);
 
         BsonBinary dataKeyId = clientEncryption.createDataKey(KMS_PROVIDER, new DataKeyOptions().masterKey(masterKeyProperties.toBsonDocument()));
         String base64DataKeyId = Base64.getEncoder().encodeToString(dataKeyId.getData());

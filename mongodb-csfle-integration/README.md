@@ -13,7 +13,6 @@ This project demonstrates how to use **Client-Side Field Level Encryption (CSFLE
 5. **Fortanix DSM Configuration**
    1. DSM Group
    2. DSM cert based App
-   3. DSM Plugin to create or rotate a 96 byte secret (Find the code for the lua plugin at `plugins/plugin.lua`)
 ---
 
 ## Configuration
@@ -39,11 +38,9 @@ To configure the `trustStore` and `keyStore` in the `FortanixMongodbCSFLE.java` 
 ### Setup KMS Provider:
 Configure Fortanix DSM as the KMIP provider.
 
-### Generate a Master Key
-Invoke the DSM Plugin to create 96 byte secret in DSM that will act as the Master Key.
-
-### Generate a Data Encryption Key (DEK):
+### Generate a Data Encryption Key (DEK) and Customer Master Key(CMK):
 Generate a DEK using ClientEncryptionSettings.
+This will also generate a CMK and import into Fortanix DSM for persistent storage. Fortanix DSM can be used later for managing and retrieving this key.
 Save the DEK ID as a Base64-encoded string for schema validation.
 
 ### Define JSON Schema:
@@ -70,9 +67,10 @@ Close the MongoDB client to release resources.
 
 ### Setup KMS Provider:
 Configure Fortanix DSM as the KMIP provider.
+Pass the Base64 Key Id as command line argument.(eg: java -Dkid=FlH02YLXXXXXXXXXXXXX== -cp target/classes com.fortanix.mongodb.RotateCMK)
 
 ### Rotate the CMK
-Invoke the plugin to rotate the CMK to a new 96 byte secret.
+Generate a random 96-byte secret and invoke the rekey API to rotate the CMK stored in Fortanix DSM.
 
 ### Rewrap DEK
 Use the new CMK to rewrap the DEKs.
